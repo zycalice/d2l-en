@@ -87,13 +87,13 @@ b = tf.Variable(tf.zeros(num_outputs))
 ## Defining the Softmax Operation
 
 Before implementing the softmax regression model,
-let us briefly review how the sum operator work
+let us briefly review how the sum operator works
 along specific dimensions in a tensor,
 as discussed in :numref:`subseq_lin-alg-reduction` and :numref:`subseq_lin-alg-non-reduction`.
 Given a matrix `X` we can sum over all elements (by default) or only
 over elements in the same axis,
 i.e., the same column (axis 0) or the same row (axis 1).
-Note that if `X` is an tensor with shape (2, 3)
+Note that if `X` is a tensor with shape (2, 3)
 and we sum over the columns,
 the result will be a vector with shape (3,).
 When invoking the sum operator,
@@ -202,9 +202,12 @@ of the predicted probability assigned to the true label.
 Rather than iterating over the predictions with a Python for-loop
 (which tends to be inefficient),
 we can pick all elements by a single operator.
-Below, we create a toy data `y_hat`
-with 2 examples of predicted probabilities over 3 classes.
-Then we pick the probability of the first class in the first example
+Below, we create sample data `y_hat`
+with 2 examples of predicted probabilities over 3 classes and their corresponding labels `y`.
+With `y` we know that in the first example the first class is the correct prediction and
+in the second example the third class is the ground-truth.
+Using `y` as the indices of the probabilities in `y_hat`,
+we pick the probability of the first class in the first example
 and the probability of the third class in the second example.
 
 ```{.python .input}
@@ -300,7 +303,7 @@ that is accessed via the data iterator `data_iter`.
 def evaluate_accuracy(net, data_iter):  #@save
     """Compute the accuracy for a model on a dataset."""
     metric = Accumulator(2)  # No. of correct predictions, no. of predictions
-    for _, (X, y) in enumerate(data_iter):
+    for X, y in data_iter:
         metric.add(accuracy(net(X), y), d2l.size(y))
     return metric[0] / metric[1]
 ```
@@ -312,7 +315,7 @@ def evaluate_accuracy(net, data_iter):  #@save
     if isinstance(net, torch.nn.Module):
         net.eval()  # Set the model to evaluation mode
     metric = Accumulator(2)  # No. of correct predictions, no. of predictions
-    for _, (X, y) in enumerate(data_iter):
+    for X, y in data_iter:
         metric.add(accuracy(net(X), y), d2l.size(y))
     return metric[0] / metric[1]
 ```
@@ -394,12 +397,14 @@ def train_epoch_ch3(net, train_iter, loss, updater):  #@save
         y_hat = net(X)
         l = loss(y_hat, y)
         if isinstance(updater, torch.optim.Optimizer):
+            # Using PyTorch in-built optimizer & loss criterion
             updater.zero_grad()
             l.backward()
             updater.step()
             metric.add(float(l) * len(y), accuracy(y_hat, y),
                        y.size().numel())
         else:
+            # Using custom built optimizer & loss criterion
             l.sum().backward()
             updater(X.shape[0])
             metric.add(float(l.sum()), accuracy(y_hat, y), y.numel())
@@ -566,7 +571,8 @@ def predict_ch3(net, test_iter, n=6):  #@save
     trues = d2l.get_fashion_mnist_labels(y)
     preds = d2l.get_fashion_mnist_labels(d2l.argmax(net(X), axis=1))
     titles = [true +'\n' + pred for true, pred in zip(trues, preds)]
-    d2l.show_images(d2l.reshape(X[0:n], (n, 28, 28)), 1, n, titles=titles[0:n])
+    d2l.show_images(
+        d2l.reshape(X[0:n], (n, 28, 28)), 1, n, titles=titles[0:n])
 
 predict_ch3(net, test_iter)
 ```

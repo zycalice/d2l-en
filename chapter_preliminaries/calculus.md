@@ -9,7 +9,7 @@ As shown in :numref:`fig_circle_area`,
 an inscribed polygon with more sides of equal length better approximates
 the circle. This process is also known as the *method of exhaustion*.
 
-![Find the area of a circle with the method of exhaustion.](../img/polygon_circle.svg)
+![Find the area of a circle with the method of exhaustion.](../img/polygon-circle.svg)
 :label:`fig_circle_area`
 
 In fact, the method of exhaustion is where *integral calculus* (will be described in :numref:`sec_integral_calculus`) originates from.
@@ -172,6 +172,9 @@ To configure properties of the figures produced by `matplotlib`,
 we need to define a few functions.
 In the following,
 the `use_svg_display` function specifies the `matplotlib` package to output the svg figures for sharper images.
+Note that the comment `#@save` is a special mark where the following function,
+class, or statements are saved in the `d2l` package
+so later they can be directly invoked (e.g., `d2l.use_svg_display()`) without being redefined.
 
 ```{.python .input}
 #@tab all

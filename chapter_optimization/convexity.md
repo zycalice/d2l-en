@@ -136,7 +136,8 @@ Have a look at the function $f(x, y) = 0.5 x^2 + \cos(2 \pi y)$ below. It is cle
 
 ```{.python .input}
 #@tab all
-x, y = d2l.meshgrid(d2l.linspace(-1.0, 1.0, 101), d2l.linspace(-1.0, 1.0, 101))
+x, y = d2l.meshgrid(
+    d2l.linspace(-1.0, 1.0, 101), d2l.linspace(-1.0, 1.0, 101))
 z = x**2 + 0.5 * d2l.cos(2 * np.pi * y)
 # Plot the 3D surface
 d2l.set_figsize((6, 4))
@@ -264,10 +265,5 @@ In the context of deep learning the main purpose of convex functions is to motiv
     * Can you find the 'right' value of $\lambda$ without a lot of trial and error?
 1. Given a convex set $X$ and two vectors $\mathbf{x}$ and $\mathbf{y}$ prove that projections never increase distances, i.e., $\|\mathbf{x} - \mathbf{y}\| \geq \|\mathrm{Proj}_X(\mathbf{x}) - \mathrm{Proj}_X(\mathbf{y})\|$.
 
-:begin_tab:`mxnet`
-[Discussions](https://discuss.d2l.ai/t/350)
-:end_tab:
 
-:begin_tab:`pytorch`
-[Discussions](https://discuss.d2l.ai/t/488)
-:end_tab:
+[Discussions](https://discuss.d2l.ai/t/350)

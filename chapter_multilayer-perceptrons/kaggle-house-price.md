@@ -45,8 +45,9 @@ import zipfile
 import tarfile
 import hashlib
 
-DATA_HUB = dict()  #@save
-DATA_URL = 'http://d2l-data.s3-accelerate.amazonaws.com/'  #@save
+#@save
+DATA_HUB = dict()
+DATA_URL = 'http://d2l-data.s3-accelerate.amazonaws.com/'
 ```
 
 The following `download` function downloads a dataset,
@@ -64,7 +65,7 @@ def download(name, cache_dir=os.path.join('..', 'data')):  #@save
     """Download a file inserted into DATA_HUB, return the local filename."""
     assert name in DATA_HUB, f"{name} does not exist in {DATA_HUB}."
     url, sha1_hash = DATA_HUB[name]
-    d2l.mkdir_if_not_exist(cache_dir)
+    os.makedirs(cache_dir, exist_ok=True)
     fname = os.path.join(cache_dir, url.split('/')[-1])
     if os.path.exists(fname):
         sha1 = hashlib.sha1()
@@ -142,7 +143,7 @@ The URL is right here:
 
 > https://www.kaggle.com/c/house-prices-advanced-regression-techniques
 
-![The house price prediction competition page.](../img/house_pricing.png)
+![The house price prediction competition page.](../img/house-pricing.png)
 :width:`400px`
 :label:`fig_house_pricing`
 
@@ -200,7 +201,7 @@ npx.set_np()
 %matplotlib inline
 from d2l import torch as d2l
 import torch
-import torch.nn as nn
+from torch import nn
 import pandas as pd
 import numpy as np
 ```
@@ -313,7 +314,7 @@ in the same way that we previously transformed
 multiclass labels into vectors (see :numref:`subsec_classification-problem`).
 For instance, "MSZoning" assumes the values "RL" and "RM".
 Dropping the "MSZoning" feature,
-two new indicator features 
+two new indicator features
 "MSZoning_RL" and "MSZoning_RM" are created with values being either 0 or 1.
 According to one-hot encoding,
 if the original value of "MSZoning" is "RL",
@@ -429,8 +430,8 @@ def log_rmse(net, features, labels):
     # To further stabilize the value when the logarithm is taken, set the
     # value less than 1 as 1
     clipped_preds = torch.clamp(net(features), 1, float('inf'))
-    rmse = torch.sqrt(torch.mean(loss(torch.log(clipped_preds),
-                                       torch.log(labels))))
+    rmse = torch.sqrt(loss(torch.log(clipped_preds),
+                           torch.log(labels)))
     return rmse.item()
 ```
 
@@ -560,8 +561,8 @@ when we train $K$ times in the $K$-fold cross-validation.
 
 ```{.python .input}
 #@tab all
-def k_fold(k, X_train, y_train, num_epochs,
-           learning_rate, weight_decay, batch_size):
+def k_fold(k, X_train, y_train, num_epochs, learning_rate, weight_decay,
+           batch_size):
     train_l_sum, valid_l_sum = 0, 0
     for i in range(k):
         data = get_k_fold_data(k, i, X_train, y_train)
@@ -571,8 +572,8 @@ def k_fold(k, X_train, y_train, num_epochs,
         train_l_sum += train_ls[-1]
         valid_l_sum += valid_ls[-1]
         if i == 0:
-            d2l.plot(list(range(1, num_epochs+1)), [train_ls, valid_ls],
-                     xlabel='epoch', ylabel='rmse',
+            d2l.plot(list(range(1, num_epochs + 1)), [train_ls, valid_ls],
+                     xlabel='epoch', ylabel='rmse', xlim=[1, num_epochs],
                      legend=['train', 'valid'], yscale='log')
         print(f'fold {i + 1}, train log rmse {float(train_ls[-1]):f}, '
               f'valid log rmse {float(valid_ls[-1]):f}')
@@ -631,7 +632,7 @@ def train_and_pred(train_features, test_feature, train_labels, test_data,
     train_ls, _ = train(net, train_features, train_labels, None, None,
                         num_epochs, lr, weight_decay, batch_size)
     d2l.plot(np.arange(1, num_epochs + 1), [train_ls], xlabel='epoch',
-             ylabel='log rmse', yscale='log')
+             ylabel='log rmse', xlim=[1, num_epochs], yscale='log')
     print(f'train log rmse {float(train_ls[-1]):f}')
     # Apply the network to the test set
     preds = d2l.numpy(net(test_features))
@@ -664,7 +665,7 @@ The steps are quite simple:
 * Click the “Upload Submission File” button in the dashed box at the bottom of the page and select the prediction file you wish to upload.
 * Click the “Make Submission” button at the bottom of the page to view your results.
 
-![Submitting data to Kaggle](../img/kaggle_submit2.png)
+![Submitting data to Kaggle](../img/kaggle-submit2.png)
 :width:`400px`
 :label:`fig_kaggle_submit2`
 

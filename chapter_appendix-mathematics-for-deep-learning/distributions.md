@@ -334,7 +334,7 @@ def binom(n, k):
         comb = comb * (n - i) // (i + 1)
     return comb
 
-pmf = torch.tensor([p**i * (1-p)**(n - i) * binom(n, i) for i in range(n + 1)])
+pmf = d2l.tensor([p**i * (1-p)**(n - i) * binom(n, i) for i in range(n + 1)])
 
 d2l.plt.stem([i for i in range(n + 1)], pmf, use_line_collection=True)
 d2l.plt.xlabel('x')
@@ -478,7 +478,6 @@ d2l.plt.ylabel('p.m.f.')
 d2l.plt.show()
 ```
 
-
 ```{.python .input}
 #@tab tensorflow
 lam = 5.0
@@ -595,7 +594,6 @@ for i in range(4):
 d2l.plt.show()
 ```
 
-
 ```{.python .input}
 #@tab tensorflow
 p = 0.2
@@ -674,7 +672,7 @@ d2l.plot(x, np.array([phi(y) for y in x.tolist()]), 'x', 'c.d.f.')
 ```{.python .input}
 #@tab pytorch
 def phi(x):
-    return (1.0 + erf((x - mu) / (sigma * torch.sqrt(torch.tensor(2.))))) / 2.0
+    return (1.0 + erf((x - mu) / (sigma * torch.sqrt(d2l.tensor(2.))))) / 2.0
 
 d2l.plot(x, torch.tensor([phi(y) for y in x.tolist()]), 'x', 'c.d.f.')
 ```
@@ -815,4 +813,12 @@ powerful family of distributions encountered frequently in machine learning.
 
 :begin_tab:`mxnet`
 [Discussions](https://discuss.d2l.ai/t/417)
+:end_tab:
+
+:begin_tab:`pytorch`
+[Discussions](https://discuss.d2l.ai/t/1098)
+:end_tab:
+
+:begin_tab:`tensorflow`
+[Discussions](https://discuss.d2l.ai/t/1099)
 :end_tab:

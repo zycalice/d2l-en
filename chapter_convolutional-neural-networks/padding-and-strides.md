@@ -1,6 +1,7 @@
 # Padding and Stride
 :label:`sec_padding`
 
+
 In the previous example of :numref:`fig_correlation`,
 our input had both a height and width of 3
 and our convolution kernel had both a height and width of 2,
@@ -282,7 +283,8 @@ comp_conv2d(conv2d, X).shape
 
 ```{.python .input}
 #@tab tensorflow
-conv2d = tf.keras.layers.Conv2D(1, kernel_size=(3,5), padding='valid', strides=(3, 4))
+conv2d = tf.keras.layers.Conv2D(1, kernel_size=(3,5), padding='valid',
+                                strides=(3, 4))
 comp_conv2d(conv2d, X).shape
 ```
 

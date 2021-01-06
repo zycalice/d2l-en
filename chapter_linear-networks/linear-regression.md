@@ -80,7 +80,7 @@ limit the expressivity of our model.
 Strictly speaking, :eqref:`eq_price-area` is an *affine transformation*
 of input features,
 which is characterized by
-a *linear transformation* of features via weighted sum, combined with 
+a *linear transformation* of features via weighted sum, combined with
 a *translation* via the added bias.
 
 Given a dataset, our goal is to choose
@@ -177,7 +177,7 @@ To make things more concrete, consider the example below
 where we plot a regression problem for a one-dimensional case
 as shown in :numref:`fig_fit_linreg`.
 
-![Fit data with a linear model.](../img/fit_linreg.svg)
+![Fit data with a linear model.](../img/fit-linreg.svg)
 :label:`fig_fit_linreg`
 
 Note that large differences between
@@ -454,7 +454,7 @@ reducing the potential for errors.
 :label:`subsec_normal_distribution_and_squared_loss`
 
 While you can already get your hands dirty using only the information above,
-in the following we can more formally motivate the square loss objective
+in the following we can more formally motivate the squared loss objective
 via assumptions about the distribution of noise.
 
 Linear regression was invented by Gauss in 1795,
@@ -494,7 +494,7 @@ d2l.plot(x, [normal(x, mu, sigma) for mu, sigma in params], xlabel='x',
 As we can see, changing the mean corresponds to a shift along the $x$-axis,
 and increasing the variance spreads the distribution out, lowering its peak.
 
-One way to motivate linear regression with the mean squared error loss function (or simply square loss)
+One way to motivate linear regression with the mean squared error loss function (or simply squared loss)
 is to formally assume that observations arise from noisy observations,
 where the noise is normally distributed as follows:
 
@@ -596,7 +596,7 @@ the *nucleus* (CPU), the *axon* (output wire),
 and the *axon terminals* (output terminals),
 enabling connections to other neurons via *synapses*.
 
-![The real neuron.](../img/Neuron.svg)
+![The real neuron.](../img/neuron.svg)
 :label:`fig_Neuron`
 
 Information $x_i$ arriving from other neurons

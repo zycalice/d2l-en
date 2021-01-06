@@ -337,8 +337,9 @@ class MultiFactorScheduler:
         self.base_lr = base_lr
   
     def __call__(self, epoch):
-        if epoch in range(self.step[0], (self.step[1] + 1)):
-            return self.base_lr * self.factor
+        if epoch in self.step:
+            self.base_lr = self.base_lr * self.factor
+            return self.base_lr
         else:
             return self.base_lr
 
@@ -402,11 +403,10 @@ class CosineScheduler:
         if epoch < self.warmup_steps:
             return self.get_warmup_lr(epoch)
         if epoch <= self.max_update:
-            self.base_lr = self.final_lr + (self.base_lr_orig - self.final_lr) * \
-                    (1 + math.cos(math.pi * (epoch - self.warmup_steps) /
-                                  self.max_steps)) / 2
+            self.base_lr = self.final_lr + (
+                self.base_lr_orig - self.final_lr) * (1 + math.cos(
+                math.pi * (epoch - self.warmup_steps) / self.max_steps)) / 2
         return self.base_lr
-
 
 scheduler = CosineScheduler(max_update=20, base_lr=0.3, final_lr=0.01)
 d2l.plot(d2l.arange(num_epochs), [scheduler(t) for t in range(num_epochs)])
@@ -494,4 +494,12 @@ Warmup can be applied to any scheduler (not just cosine). For a more detailed di
 
 :begin_tab:`mxnet`
 [Discussions](https://discuss.d2l.ai/t/359)
+:end_tab:
+
+:begin_tab:`pytorch`
+[Discussions](https://discuss.d2l.ai/t/1080)
+:end_tab:
+
+:begin_tab:`tensorflow`
+[Discussions](https://discuss.d2l.ai/t/1081)
 :end_tab:

@@ -49,7 +49,7 @@ from mxnet import gluon, np, npx
 from mxnet.gluon import nn
 import mxnet as mx
 import random
-import sys
+
 npx.set_np()
 ```
 
@@ -104,7 +104,7 @@ class Caser(nn.Block):
 ```
 
 ## Sequential Dataset with Negative Sampling
-To process the sequential interaction data, we need to reimplement the Dataset class. The following code creates a new dataset class named `SeqDataset`. In each sample, it outputs the user identity, his previous $L$ interacted items as a sequence and the next item he interacts as the target. The following figure demonstrates the data loading process for one user. Suppose that this user liked 8 movies, we organize these eight movies in chronological order. The latest movie is left out as the test item. For the remaining seven movies, we can get three training samples, with each sample containing a sequence of five ($L=5$) movies and its subsequent item as the target item. Negative samples are also included in the Customized dataset.
+To process the sequential interaction data, we need to reimplement the Dataset class. The following code creates a new dataset class named `SeqDataset`. In each sample, it outputs the user identity, his previous $L$ interacted items as a sequence and the next item he interacts as the target. The following figure demonstrates the data loading process for one user. Suppose that this user liked 9 movies, we organize these nine movies in chronological order. The latest movie is left out as the test item. For the remaining eight movies, we can get three training samples, with each sample containing a sequence of five ($L=5$) movies and its subsequent item as the target item. Negative samples are also included in the Customized dataset.
 
 ![Illustration of the data generation process](../img/rec-seq-data.svg)
 
@@ -167,7 +167,7 @@ class SeqDataset(gluon.data.Dataset):
 Afterwards, we read and split the MovieLens 100K dataset in sequence-aware mode and load the training data with sequential dataloader implemented above.
 
 ```{.python .input  n=6}
-TARGET_NUM, L, batch_size = 1, 3, 4096
+TARGET_NUM, L, batch_size = 1, 5, 4096
 df, num_users, num_items = d2l.read_data_ml100k()
 train_data, test_data = d2l.split_data_ml100k(df, num_users, num_items,
                                               'seq-aware')

@@ -18,7 +18,7 @@ given a dataset with features $\mathbf{X}$
 and labels $\mathbf{y}$,
 we might try finding it by solving the following optimization problem:
 
-$$f^*_\mathcal{F} := \mathop{\mathrm{argmin}}_f L(\mathbf{X}, \mathbf{y}, f) \text{ subject to } f \in \mathcal{F}.$$
+$$f^*_\mathcal{F} \stackrel{\mathrm{def}}{=} \mathop{\mathrm{argmin}}_f L(\mathbf{X}, \mathbf{y}, f) \text{ subject to } f \in \mathcal{F}.$$
 
 It is only reasonable to assume that if we design a different and more powerful architecture $\mathcal{F}'$ we should arrive at a better outcome. In other words, we would expect that $f^*_{\mathcal{F}'}$ is "better" than $f^*_{\mathcal{F}}$. However, if $\mathcal{F} \not\subseteq \mathcal{F}'$ there is no guarantee that this should even happen. In fact, $f^*_{\mathcal{F}'}$ might well be worse. 
 As illustrated by :numref:`fig_functionclasses`,
@@ -91,6 +91,7 @@ from mxnet.gluon import nn
 npx.set_np()
 
 class Residual(nn.Block):  #@save
+    """The Residual block of ResNet."""
     def __init__(self, num_channels, use_1x1conv=False, strides=1, **kwargs):
         super().__init__(**kwargs)
         self.conv1 = nn.Conv2D(num_channels, kernel_size=3, padding=1,
@@ -120,6 +121,7 @@ from torch import nn
 from torch.nn import functional as F
 
 class Residual(nn.Module):  #@save
+    """The Residual block of ResNet."""
     def __init__(self, input_channels, num_channels,
                  use_1x1conv=False, strides=1):
         super().__init__()
@@ -151,6 +153,7 @@ from d2l import tensorflow as d2l
 import tensorflow as tf
 
 class Residual(tf.keras.Model):  #@save
+    """The Residual block of ResNet."""
     def __init__(self, num_channels, use_1x1conv=False, strides=1):
         super().__init__()
         self.conv1 = tf.keras.layers.Conv2D(
@@ -426,7 +429,7 @@ d2l.train_ch6(net, train_iter, test_iter, num_epochs, lr)
    activation, and convolution" structure. Make this improvement
    yourself. See Figure 1 in :cite:`He.Zhang.Ren.ea.2016*1`
    for details.
-1. Why cannot we just increase the complexity of functions without bound, even if the function classes are nested?
+1. Why can't we just increase the complexity of functions without bound, even if the function classes are nested?
 
 :begin_tab:`mxnet`
 [Discussions](https://discuss.d2l.ai/t/85)

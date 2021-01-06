@@ -597,7 +597,7 @@ $$
 \end{aligned}
 $$
 
-![By summing along the columns of our array of probabilities, we are able to obtain the marginal distribution for just the random variable represented along the $x$-axis.](../img/Marginal.svg)
+![By summing along the columns of our array of probabilities, we are able to obtain the marginal distribution for just the random variable represented along the $x$-axis.](../img/marginal.svg)
 :label:`fig_marginal`
 
 This tells us to add up the value of the density along a series of squares in a line as is shown in :numref:`fig_marginal`.  Indeed, after canceling one factor of epsilon from both sides, and recognizing the sum on the right is the integral over $y$, we can conclude that
@@ -856,4 +856,13 @@ Indeed if we think of norms as being related to standard deviations, and correla
 
 :begin_tab:`mxnet`
 [Discussions](https://discuss.d2l.ai/t/415)
+:end_tab:
+
+:begin_tab:`pytorch`
+[Discussions](https://discuss.d2l.ai/t/1094)
+:end_tab:
+
+
+:begin_tab:`tensorflow`
+[Discussions](https://discuss.d2l.ai/t/1095)
 :end_tab:
